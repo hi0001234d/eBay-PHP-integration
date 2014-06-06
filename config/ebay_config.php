@@ -68,50 +68,8 @@ function getStoreConfig()
 {
 	// url
 	$res['store_url'] = "http://stores.ebay.com/perrianjewels";
-	
 	return $res;
 }
-
-/**
- * @abstract returns shipping config
- */
-function getShippingConfig() 
-{
-	// shipping
-	$res['time'] = "12";
-	$res['cost'] = 0;
-	$res['additional_cost'] = 0;
-	$res['method'] = "USPSPriority";
-	$res['locations'] = "US";
-
-	return $res;
-}
-
-/**
- * @abstract returns refund config
- */
-function getRefundConfig() 
-{
-
-	/*
-		example return policy:
-		<ReturnPolicy>
-			<RefundOption>Exchange</RefundOption>
-			<Refund>Exchange</Refund>
-			<ReturnsWithinOption>Days_7</ReturnsWithinOption>
-			<ReturnsWithin>7 Days</ReturnsWithin>
-			<ReturnsAcceptedOption>ReturnsAccepted</ReturnsAcceptedOption>
-			<ReturnsAccepted>Returns Accepted</ReturnsAccepted>
-			<ShippingCostPaidByOption>Buyer</ShippingCostPaidByOption>
-			<ShippingCostPaidBy>Buyer</ShippingCostPaidBy>
-		</ReturnPolicy>
-	*/
-	
-
-	
-	return $refund;	
-}
-
 
 /**
  * @abstract returns listing config
@@ -159,39 +117,5 @@ function getListingConfig()
 }
 
 //*************************************************** store/listing configuration end ****************************//
-
-
-/**
- * @abstract return CatID belogs to eBay store category and the actual id passed as input is of sellers applications category_id
- * @param $category_id: category_id of client(seller's) application database
- */
-function getStoreCategoryID( $category_id ) 
-{
-	if( INTERFACE_MODE == 'MYSQL' )	
-	{
-		return exeQuery( " SELECT ebay_category_id FROM product_categories WHERE category_id=".$category_id." " );
-	}
-	else if( INTERFACE_MODE == 'STATIC' )
-	{
-		// store categoryID array : applicable to STATIC mode only
-		$store['category']['Ring'] = "5614871011";
-		$store['category']['Solitaire'] = "5614925011";
-		$store['category']['Gemstone'] = "5614926011";
-		
-		if( isset( $store['category'][ $category_alias ] ) ) 
-		{
-			return $store['category'][ $category_alias ]; 
-		} 
-		else 
-		{
-			return false;	
-		}
-	}
-	else
-	{
-		return false;	
-	}
-}
-
 
 ?>
