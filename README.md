@@ -1,2 +1,0 @@
-eBay-PHP-integration
-====================
