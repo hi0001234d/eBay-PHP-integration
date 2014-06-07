@@ -1,3 +1,10 @@
-This is pulled out an existing project, you'll have to change / add some constants and other variables / config files to get it to work in your own project.  
+This is a complete make over of project forked from "https://github.com/iloveitaly/ebay-php", 
+at some point in time i had thought of contributing to the same project but since it is a complete 
+make over of project and it is no longer uses eBay's API framework, and talk directly with ebay API 
+server through clean XML calls instead of using heavy eBay API framework to format that particular 
+XMLs to do API calls.
 
-Hopefully in the future I'll have time to add the config + modularize the code a bit
+Project is mainly focus on FixedPriceListing for eBay store creation, thuogh it can be easily tuned 
+to automate process of any kind of eBay Listings. One added feature is use of eBay image servers 
+to host product images since upto 12 images are allowed if images are hosted on eBay image servers, 
+while eBay will charge extra bucks if more then 3 or 4 imges are used from self hosted servers. 
