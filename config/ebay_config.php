@@ -94,7 +94,7 @@ function getListingConfig()
 	
 	//payment config 
 	$listing['payment_method'] = 'PayPal'; 
-	$listing['paypal_id'] = 'contact@perrian.com'; 
+	$listing['paypal_id'] = 'your@email.com'; 
 	
 	//refund policy
 	$listing['option'] = 'MoneyBack'; 
