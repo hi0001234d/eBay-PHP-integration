@@ -9,4 +9,5 @@ to automate process of any kind of eBay Listings. One added feature is use of eB
 to host product images since upto 12 images are allowed if images are hosted on eBay image servers, 
 while eBay will charge extra bucks if more then 3 or 4 imges are used from self hosted servers. 
 
-You can browse to eBay store: http://stores.ebay.com/perrianjewels which was created using this wrapper
+
+You can browse to store: http://stores.ebay.com/perrianjewels this is the store created using this eBay-PHP wrapper.
