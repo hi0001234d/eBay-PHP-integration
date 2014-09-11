@@ -67,7 +67,7 @@ function geteBayConfigurations()
 function getStoreConfig() 
 {
 	// url
-	$res['store_url'] = "http://stores.ebay.com/perrianjewels";
+	$res['store_url'] = "http://stores.ebay.com/jewelsvenus";
 	return $res;
 }
 

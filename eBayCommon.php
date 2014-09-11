@@ -9,7 +9,8 @@ class eBayCommon
 	public $staging_debug; 
 	public $mode;
 	public $responseDoc;
-	public $block_style;
+	public $block_style; 
+	public $request_type; 
 	
 	/**
 	 * @abstract mode of request identified by numeric value  
@@ -19,13 +20,22 @@ class eBayCommon
 	/**
 	 * @abstract constructor
 	 */
-	function __construct()
+	function __construct( $req="FixedPriceItem" )
 	{
 		$this->dev_debug = FALSE;
 		$this->staging_debug = TRUE;
 		$this->mode = 0;
 		$this->block_style = ' style="background-color: #f1f1f1; margin: 50px;" ';
 
+		/**
+		 * added Reqeust type support on 11-09-2014 however default to "FixedPriceItem"
+		 * type supported are
+		 * FixedPriceItem: Buy it Now
+		 * Item: Auction
+		 * 
+		 */
+		$this->request_type = $req; 
+		
 		//import all configs
 		require_once EBAY_DATA_FOLDER.'config/ebay_config.php';
 
@@ -365,11 +375,11 @@ class eBayCommon
 			if( $is_start )
 			{
 				return '<?xml version="1.0" encoding="utf-8" ?>
-						<AddFixedPriceItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
+						<Add'.$this->request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
 			}
 			else 
 			{
-				return '</AddFixedPriceItemRequest>'; 
+				return '</Add'.$this->request_type.'Request>'; 
 			}
 		}
 		else if( $this->mode == 2 ) 
@@ -377,11 +387,11 @@ class eBayCommon
 			if( $is_start )
 			{
 				return '<?xml version="1.0" encoding="utf-8" ?>
-						<ReviseFixedPriceItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
+						<Revise'.$this->request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
 			}
 			else
 			{
-				return '</ReviseFixedPriceItemRequest>'; 
+				return '</Revise'.$this->request_type.'Request>'; 
 			}
 		}
 		else if( $this->mode == 3 ) 
@@ -389,11 +399,11 @@ class eBayCommon
 			if( $is_start )
 			{
 				return '<?xml version="1.0" encoding="utf-8" ?>
-						<EndFixedPriceItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
+						<End'.$this->request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
 			}
 			else
 			{
-				return '</EndFixedPriceItemRequest>'; 
+				return '</End'.$this->request_type.'Request>'; 
 			}
 		}
 		else if( $this->mode == 4 ) 
@@ -413,11 +423,11 @@ class eBayCommon
 			if( $is_start )
 			{
 				return '<?xml version="1.0" encoding="utf-8" ?>
-						<RelistFixedPriceItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
+						<Relist'.$this->request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
 			}
 			else 
 			{
-				return '</RelistFixedPriceItemRequest>'; 
+				return '</Relist'.$this->request_type.'Request>'; 
 			}
 		}
 
