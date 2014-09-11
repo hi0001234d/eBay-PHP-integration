@@ -76,6 +76,9 @@ function getStoreConfig()
  */
 function getListingConfig() 
 {
+	//brand
+	$listing["brand_name"] = "Meera Jewels";
+	
 	$listing["is_store_listing"] = FALSE; 
 	$listing["is_auction"] = TRUE;
 	
