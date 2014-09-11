@@ -345,15 +345,15 @@ class eBayCommon
 	{
 		if( $this->mode == 1 ) 
 		{
-			return 'AddFixedPriceItem';
+			return 'Add'.$this->ebay_request_type.'';
 		}
 		else if( $this->mode == 2 ) 
 		{
-			return 'ReviseFixedPriceItem';
+			return 'Revise'.$this->ebay_request_type.'';
 		}
 		else if( $this->mode == 3 ) 
 		{
-			return 'EndFixedPriceItem';
+			return 'End'.$this->ebay_request_type.'';
 		}
 		else if( $this->mode == 4 ) 
 		{
@@ -361,7 +361,7 @@ class eBayCommon
 		}
 		else if( $this->mode == 5 ) 
 		{
-			return 'RelistFixedPriceItem';
+			return 'Relist'.$this->ebay_request_type.'';
 		}
 	}
 
