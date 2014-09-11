@@ -76,6 +76,9 @@ function getStoreConfig()
  */
 function getListingConfig() 
 {
+	$listing["is_store_listing"] = FALSE; 
+	$listing["is_auction"] = TRUE;
+	
 	//listing SEO config 
 	$listing['EBAY_TITLE_LENGTH'] = 80; 
 	$listing['title_prefix'] = ''; 

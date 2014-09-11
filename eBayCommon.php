@@ -452,6 +452,15 @@ class eBayCommon
 	function formatItemAddUpdateXML( $listingData ) 
 	{
 		$listingConfig = getListingConfig();
+		if( $this->ebay_request_type == "FixedPriceItem" )
+		{
+			$listingConfig['type'] = "FixedPriceItem";
+		}
+		else if( $this->ebay_request_type == "Item" )
+		{
+			$listingConfig['type'] = "Item";
+		}
+		
 		
 		$requestXmlBody = '<Item>';
 		$requestXmlBody .= '<Site>'.$listingConfig['site'].'</Site>';
@@ -466,18 +475,34 @@ class eBayCommon
 		$requestXmlBody .= '<CategoryID>'.$listingData['PrimaryCategoryID'].'</CategoryID>';
 		$requestXmlBody .= '</PrimaryCategory>';
 		
-		//store category
-		$requestXmlBody .= '<Storefront>
-							  <StoreCategoryID>'.$listingData['StoreCategoryID'].'</StoreCategoryID>';
-		if( !empty( $listingData['StoreCategory2ID'] ) )
+		if( $listingConfig["is_store_listing"] )
 		{
-			$requestXmlBody .= '<StoreCategory2ID>'.$listingData['StoreCategory2ID'].'</StoreCategory2ID>';
-		}					
-		$requestXmlBody .= '</Storefront>';
+			//store category
+			$requestXmlBody .= '<Storefront>
+							  <StoreCategoryID>'.$listingData['StoreCategoryID'].'</StoreCategoryID>';
+			if( !empty( $listingData['StoreCategory2ID'] ) )
+			{
+				$requestXmlBody .= '<StoreCategory2ID>'.$listingData['StoreCategory2ID'].'</StoreCategory2ID>';
+			}
+			$requestXmlBody .= '</Storefront>';
+		}
 
-		
-		$requestXmlBody .= '<StartPrice currencyID="USD">'.$listingData['price'].'</StartPrice>';	//only set start price if item is applicable to auction
-		$requestXmlBody .= '<BuyItNowPrice>0</BuyItNowPrice>';
+		if( $this->ebay_request_type == "FixedPriceItem" )
+		{
+			$requestXmlBody .= '<StartPrice currencyID="USD">'.$listingData['price'].'</StartPrice>';	//only set start price if item is applicable to auction
+			$requestXmlBody .= '<BuyItNowPrice>0</BuyItNowPrice>';
+		}
+		else if( $this->ebay_request_type == "Item" )
+		{
+			$requestXmlBody .= '<StartPrice currencyID="USD">'.$listingData['StartPrice'].'</StartPrice>';	//only set start price if item is applicable to auction
+			$requestXmlBody .= '<DiscountPriceInfo currencyID="USD">'.$listingData['DiscountPriceInfo'].'</DiscountPriceInfo>';
+			$requestXmlBody .= '<BuyItNowPrice currencyID="USD">'.$listingData['BuyItNowPrice'].'</BuyItNowPrice>'; 
+			
+			if( $listingConfig["is_auction"] )
+			{
+				$requestXmlBody .= '<LiveAuction>'.TRUE.'</LiveAuction>'; 
+			}
+		}
 		
 		//remove below tags if you don't wish to allow best offer feature
 		$requestXmlBody .= '<BestOfferDetails>
