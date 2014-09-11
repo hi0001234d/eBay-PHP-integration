@@ -10,7 +10,7 @@ class eBayCommon
 	public $mode;
 	public $responseDoc;
 	public $block_style; 
-	public $ebay_request_type; 
+	public $ebay_request_type;  
 	
 	/**
 	 * @abstract mode of request identified by numeric value  
