@@ -452,14 +452,6 @@ class eBayCommon
 	function formatItemAddUpdateXML( $listingData ) 
 	{
 		$listingConfig = getListingConfig();
-		if( $this->ebay_request_type == "FixedPriceItem" )
-		{
-			$listingConfig['type'] = "FixedPriceItem";
-		}
-		else if( $this->ebay_request_type == "Item" )
-		{
-			$listingConfig['type'] = "Item";
-		}
 		
 		
 		$requestXmlBody = '<Item>';
@@ -513,8 +505,16 @@ class eBayCommon
 		$requestXmlBody .= '<Currency>USD</Currency>';
 		$requestXmlBody .= '<DispatchTimeMax>'.$listingConfig['DispatchTimeMax'].'</DispatchTimeMax>'; 
 		$requestXmlBody .= '<ListingDuration>'.$listingConfig['duration'].'</ListingDuration>'; 
-		$requestXmlBody .= '<ListingType>'.$listingConfig['type'].'</ListingType>'; 
-		
+
+		if( $this->ebay_request_type == "FixedPriceItem" )
+		{
+			$requestXmlBody .= '<ListingType>FixedPriceItem</ListingType>'; 
+		}
+		else if( $this->ebay_request_type == "Item" )
+		{
+			
+		}
+				
 		$requestXmlBody .= '<PaymentMethods>'.$listingConfig['payment_method'].'</PaymentMethods>'; 
 		$requestXmlBody .= '<PayPalEmailAddress>'.$listingConfig['paypal_id'].'</PayPalEmailAddress>'; 
 		
