@@ -10,7 +10,7 @@ class eBayCommon
 	public $mode;
 	public $responseDoc;
 	public $block_style; 
-	public $request_type; 
+	public $ebay_request_type; 
 	
 	/**
 	 * @abstract mode of request identified by numeric value  
@@ -34,7 +34,7 @@ class eBayCommon
 		 * Item: Auction
 		 * 
 		 */
-		$this->request_type = $req; 
+		$this->ebay_request_type = $req; 
 		
 		//import all configs
 		require_once EBAY_DATA_FOLDER.'config/ebay_config.php';
@@ -375,11 +375,11 @@ class eBayCommon
 			if( $is_start )
 			{
 				return '<?xml version="1.0" encoding="utf-8" ?>
-						<Add'.$this->request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
+						<Add'.$this->ebay_request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
 			}
 			else 
 			{
-				return '</Add'.$this->request_type.'Request>'; 
+				return '</Add'.$this->ebay_request_type.'Request>'; 
 			}
 		}
 		else if( $this->mode == 2 ) 
@@ -387,11 +387,11 @@ class eBayCommon
 			if( $is_start )
 			{
 				return '<?xml version="1.0" encoding="utf-8" ?>
-						<Revise'.$this->request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
+						<Revise'.$this->ebay_request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
 			}
 			else
 			{
-				return '</Revise'.$this->request_type.'Request>'; 
+				return '</Revise'.$this->ebay_request_type.'Request>'; 
 			}
 		}
 		else if( $this->mode == 3 ) 
@@ -399,11 +399,11 @@ class eBayCommon
 			if( $is_start )
 			{
 				return '<?xml version="1.0" encoding="utf-8" ?>
-						<End'.$this->request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
+						<End'.$this->ebay_request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
 			}
 			else
 			{
-				return '</End'.$this->request_type.'Request>'; 
+				return '</End'.$this->ebay_request_type.'Request>'; 
 			}
 		}
 		else if( $this->mode == 4 ) 
@@ -423,11 +423,11 @@ class eBayCommon
 			if( $is_start )
 			{
 				return '<?xml version="1.0" encoding="utf-8" ?>
-						<Relist'.$this->request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
+						<Relist'.$this->ebay_request_type.'Request xmlns="urn:ebay:apis:eBLBaseComponents">';
 			}
 			else 
 			{
-				return '</Relist'.$this->request_type.'Request>'; 
+				return '</Relist'.$this->ebay_request_type.'Request>'; 
 			}
 		}
 
