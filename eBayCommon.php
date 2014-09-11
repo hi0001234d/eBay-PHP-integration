@@ -22,7 +22,7 @@ class eBayCommon
 	 */
 	function __construct( $req="FixedPriceItem" )
 	{
-		$this->dev_debug = FALSE;
+		$this->dev_debug = TRUE;
 		$this->staging_debug = TRUE;
 		$this->mode = 0;
 		$this->block_style = ' style="background-color: #f1f1f1; margin: 50px;" ';
@@ -364,7 +364,7 @@ class eBayCommon
 			return 'Relist'.$this->ebay_request_type.'';
 		}
 	}
-
+	
 /**
  * @abstract return xml start or end tag applicable for call being made
  */
@@ -483,11 +483,16 @@ class eBayCommon
 		{
 			$requestXmlBody .= '<StartPrice currencyID="USD">'.$listingData['price'].'</StartPrice>';	//only set start price if item is applicable to auction
 			$requestXmlBody .= '<BuyItNowPrice>0</BuyItNowPrice>';
+
+			//remove below tags if you don't wish to allow best offer feature
+			$requestXmlBody .= '<BestOfferDetails>
+								<BestOfferEnabled>true</BestOfferEnabled>
+							</BestOfferDetails>';
 		}
 		else if( $this->ebay_request_type == "Item" )
 		{
 			$requestXmlBody .= '<StartPrice currencyID="USD">'.$listingData['StartPrice'].'</StartPrice>';	//only set start price if item is applicable to auction
-			$requestXmlBody .= '<DiscountPriceInfo currencyID="USD">'.$listingData['DiscountPriceInfo'].'</DiscountPriceInfo>';
+// 			$requestXmlBody .= '<DiscountPriceInfo currencyID="USD">'.$listingData['DiscountPriceInfo'].'</DiscountPriceInfo>';
 			$requestXmlBody .= '<BuyItNowPrice currencyID="USD">'.$listingData['BuyItNowPrice'].'</BuyItNowPrice>'; 
 			
 			if( $listingConfig["is_auction"] )
@@ -496,25 +501,22 @@ class eBayCommon
 			}
 		}
 		
-		//remove below tags if you don't wish to allow best offer feature
-		$requestXmlBody .= '<BestOfferDetails>
-								<BestOfferEnabled>true</BestOfferEnabled>
-							</BestOfferDetails>';
-		
 		$requestXmlBody .= '<Country>IN</Country>';
 		$requestXmlBody .= '<Currency>USD</Currency>';
 		$requestXmlBody .= '<DispatchTimeMax>'.$listingConfig['DispatchTimeMax'].'</DispatchTimeMax>'; 
 		$requestXmlBody .= '<ListingDuration>'.$listingConfig['duration'].'</ListingDuration>'; 
-
+		
 		if( $this->ebay_request_type == "FixedPriceItem" )
 		{
 			$requestXmlBody .= '<ListingType>FixedPriceItem</ListingType>'; 
 		}
 		else if( $this->ebay_request_type == "Item" )
 		{
-			
+			$requestXmlBody .= '<ListingType>Chinese</ListingType>';
 		}
-				
+		
+		 
+		
 		$requestXmlBody .= '<PaymentMethods>'.$listingConfig['payment_method'].'</PaymentMethods>'; 
 		$requestXmlBody .= '<PayPalEmailAddress>'.$listingConfig['paypal_id'].'</PayPalEmailAddress>'; 
 		
@@ -616,6 +618,36 @@ class eBayCommon
 								</NameValueList>
 								
 								<NameValueList>
+								  <Name>Country/Region of Manufacture</Name>
+								  <Value>India</Value>
+								  <Source>ItemSpecific</Source>
+							    </NameValueList>
+								
+								<NameValueList>
+								  <Name>Brand</Name>
+								  <Value>'.$listingConfig["brand_name"].'</Value>
+								  <Source>ItemSpecific</Source>
+								</NameValueList>
+								  		
+								<NameValueList>
+								  <Name>Natural/Lab-Created</Name>
+								  <Value>Lab Created</Value>
+								  <Source>ItemSpecific</Source>
+							    </NameValueList>';
+								
+								/*<NameValueList>
+								  <Name>Style</Name>
+								  <Value></Value>
+								  <Source>ItemSpecific</Source>
+								</NameValueList>
+								
+								<NameValueList>
+								  <Name>Main Stone Shape</Name>
+								  <Value>'.$listingData['diamond_shape_name_cs'].'</Value>
+								  <Source>ItemSpecific</Source>
+								</NameValueList>
+								
+								<NameValueList>
 								  <Name>Diamond Color</Name>
 								  <Value>I-J</Value>
 								  <Source>ItemSpecific</Source>
@@ -632,31 +664,8 @@ class eBayCommon
 								  <Value>IGI</Value>
 								  <Source>ItemSpecific</Source>
 								</NameValueList>
-								
-								<NameValueList>
-								  <Name>Country/Region of Manufacture</Name>
-								  <Value>India</Value>
-								  <Source>ItemSpecific</Source>
-							    </NameValueList>
-								
-								<NameValueList>
-								  <Name>Brand</Name>
-								  <Value>Perrian</Value>
-								  <Source>ItemSpecific</Source>
-								</NameValueList>
-								
-								<NameValueList>
-								  <Name>Main Stone Shape</Name>
-								  <Value>'.$listingData['diamond_shape_name_cs'].'</Value>
-								  <Source>ItemSpecific</Source>
-								</NameValueList>';
-								
-								/*<NameValueList>
-								  <Name>Style</Name>
-								  <Value></Value>
-								  <Source>ItemSpecific</Source>
-								</NameValueList>*/
-								
+								*/
+										
 		$requestXmlBody .= '<NameValueList>
 								  <Name>Main Stone Treatment</Name>
 								  <Value>Not Enhanced</Value>
